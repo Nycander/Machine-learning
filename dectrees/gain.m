@@ -1,5 +1,10 @@
+function [G] = gain(S)
+	G = [];
+	for attr = 1:6
+		G(attr) = gainAttr(S, attr);
+	end
 
-function G = gain(S, A)
+function G = gainAttr(S, A)
 	G = ent(S);
 	Scount = size(S, 1);
 
