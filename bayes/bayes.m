@@ -18,3 +18,4 @@ function [ mu, sigma ] = bayes( data )
 	end
 end
 
+

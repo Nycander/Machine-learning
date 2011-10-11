@@ -73,3 +73,5 @@ mask3D(:,:,3) = mask;
 result_im = uint8(double(book) .* mask3D);
 figure;
 imagesc(result_im);
+
+
