@@ -63,7 +63,7 @@ for t in range(T):
 	# * Take action a, observe r, and next state s'
 	(newState, reward) = environment.go(action)
 	# * Update Q(s, a) <- Q(s, a) + n[r + gamma * max_(a') Q(s', a') - Q(s, a)]
-	maxFutureValue = argmax(lambda(newAction): Q[newState][newAction], actions)
+	maxFutureValue = Q[newState][argmax(lambda(newAction): Q[newState][newAction], actions)]
 	Q[state][action] += learningRate*(reward + discountFactor*maxFutureValue - Q[state][action])
 	# * Replace s with s'
 	state = newState
