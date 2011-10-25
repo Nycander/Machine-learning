@@ -77,7 +77,8 @@ for state in range(0, 16) :
 	test.append(state)
 	# Find 8 following states
 	for f in range(0, 8) :
-		state = egreedy(0, lambda(a): Q[state][a], actions)
+		action = egreedy(0, lambda(a): Q[state][a], actions)
+		(state, reward) = environment.go(action)
 		test.append(state)
 	# Show comic
 	comic = numpy.concatenate([images[i] for i in test], axis=1)
