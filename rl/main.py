@@ -22,23 +22,42 @@ images = (pylab.imread('step1.png'),
 # Policy iteration variables
 
 gamma = 0.9
+goodbad =   ((0, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (1, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, -1, 0,),
+			 (0, 0, 1, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (-1, 0, 0, 0,),
+			 (0, 0, 0, 0,),
+			 (0, 0, 0, 0,))
 
-rew =  ((-1, 0, -1, 0,),
-        (-1, 1, -1, 0,), #poäng abuse om man sparkar?
-        (0, -1, -1, 0,),
-        (0, -1, 0, -1,),
-        (-1, -1, -1, 1,),
-        (-1, -1, -1, -1,),
-        (0, -1, 0, -1,),
-        (-1, -1, 0, -1,),
-        (-1, -1, 0, -1,),
-        (0, -1, 0, -1,),
-        (-1, -1, -1, -1,),
-        (-1, -1, -1, 1,),
-        (0, -1, 0, -1,),
-        (0, -1, -1, 0,),
-        (-1, 1, -1, 0,),
-        (-1, 0, -1, 0,))
+imfalling =
+		((0, 0, -1, 0,), 
+		(-1, 0, -1, 0,),
+		(0, 0, -1, 0,),
+		(0, -1, 0, -1,),
+		(-1, -1, -1, 0,),
+		(-1, -1, 0, -1,),
+		(0, -1, 0, -1,),
+		(-1, -1, 0, -1,),
+		(-1, -1, 0, -1,),
+		(0, -1, 0, -1,),
+		(-1, -1, 0, -1,),
+		(-1, -1, -1, 0,),
+		(0, -1, 0, -1,),
+		(-1, 0, -1, 0,),
+		(-1, 0, -1, 0,),
+		(0, 0, -1, 0,))
+
+rev = imfalling + goodbad
 
 trans = ((1, 3, 4, 12),
 		 (0, 2, 5, 13),
@@ -57,9 +76,19 @@ trans = ((1, 3, 4, 12),
 		 (15, 13, 10, 2),
 		 (14, 12, 11, 3))
 
+# Utility function argmax
+def argmax(f, args):
+	mi = None
+	m = -1e10
+	for i in args:
+		v = f(i)
+		if v > m:
+			m = v
+			mi = i
+	return mi
 # Policy iteration
 policy = [None for s in trans]
-value = [0 for in trans]
+value = [0 for s in trans]
 for p in range(100):
 	for s in range(len(policy)):
 		policy[s] = argmax(
@@ -73,31 +102,21 @@ for p in range(100):
 
 # Patch together all walking animations from all states
 comicbook = []
-for state in range(0, 16)
-
+for state in range(0, 16) :
 	test = []
 	test.append(state)
-
-	# Find 5 following states
-	for f in range(0, 5)
-		state = value[state]
+	# Find 8 following states
+	for f in range(0, 8) :
+		state = trans[state][policy[state]]
 		test.append(state)
-	
 	# Show comic
 	comic = numpy.concatenate([images[i] for i in test], axis=1)
-	comicbook = numpy.concatenate((comicbook, comic), axis=0)
-
+	if len(comicbook) == 0:
+		comicbook = comic
+	else:
+		comicbook = numpy.concatenate((comicbook, comic), axis=0)
+	
 # Show comics for all states
 pylab.imshow(comicbook)
 pylab.show()
 
-# Utility function argmax
-def argmax(f, args):
-	mi = None
-	m = -1e10
-	for i in args:
-		v = f(i)
-		if v > m:
-			m = v
-			mi = i
-	return mi
