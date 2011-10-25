@@ -31,6 +31,27 @@ for t in range(T):
 	# * Replace s with s'
 	state = newState
 
+# Patch together all walking animations from all states
+comicbook = []
+for state in range(0, 16) :
+	test = []
+	test.append(state)
+	# Find 8 following states
+	for f in range(0, 8) :
+		state = egreedy(chooseBestFactor, lamdba(a): Q(state, a), actions)
+		test.append(state)
+	# Show comic
+	comic = numpy.concatenate([images[i] for i in test], axis=1)
+	if len(comicbook) == 0:
+		comicbook = comic
+	else:
+		comicbook = numpy.concatenate((comicbook, comic), axis=0)
+	
+# Show comics for all states
+pylab.imshow(comicbook)
+pylab.show()
+
+
 def egreedy(e, f, args):
 	if random() < e
 		return args[random.randint(0, len[args]-1)]
