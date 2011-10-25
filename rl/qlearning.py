@@ -2,6 +2,12 @@ import random
 
 import environment
 
+# Constants for Q-learning
+learningRate = 0.9 # 0 < n < 1
+discountFactor = 0.9 # 0 < g < 1
+chooseBestFactor = 0.75 # 0 < e < 1
+
+# Variables for current experiment
 states = range(16)
 actions = range(4)
 
@@ -9,14 +15,18 @@ actions = range(4)
 Q = [[random.normalvariate(0, 2) for a in range(len(actions))] for s in range(len(states))]
 
 # Initialize s
-s = random.randrange(0, len(state))
+state = random.randrange(0, len(state))
+
+environment = Environment(state)
 
 # Repeat for each step: (Until T steps)
 for t in range(T):
 	# * Choose a from s using e-greedy policy based on Q(s, a)
-	a = argmaxEgreedy(Q, s)
+	action = egreedy(chooseBestFactor, lamdba(a): Q(state, a), actions)
 	# * Take action a, observe r, and next state s'
-
+	(newState, reward) = environment.go(action)
 	# * Update Q(s, a) <- Q(s, a) + n[r + gamma * max_(a') Q(s', a') - Q(s, a)]
-
+	maxFutureValue = argmax(lambda(newAction): Q(newState, newAction), actions)
+	Q[state][action] += learningRate*(reward + discountFactor*maxFutureValue - Q(state, action))
 	# * Replace s with s'
+	state = newState
