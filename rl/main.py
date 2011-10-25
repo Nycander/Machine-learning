@@ -22,6 +22,9 @@ images = (pylab.imread('step1.png'),
 # Policy iteration variables
 
 gamma = 0.9
+
+# Reward the final step for walking forward
+# Punish the final step for walking backwards
 goodbad =   ((0, 0, 0, 0,),
 			 (0, 0, 0, 0,),
 			 (1, 0, 0, 0,),
@@ -39,25 +42,25 @@ goodbad =   ((0, 0, 0, 0,),
 			 (0, 0, 0, 0,),
 			 (0, 0, 0, 0,))
 
-imfalling =
-		((0, 0, -1, 0,), 
-		(-1, 0, -1, 0,),
-		(0, 0, -1, 0,),
-		(0, -1, 0, -1,),
-		(-1, -1, -1, 0,),
-		(-1, -1, 0, -1,),
-		(0, -1, 0, -1,),
-		(-1, -1, 0, -1,),
-		(-1, -1, 0, -1,),
-		(0, -1, 0, -1,),
-		(-1, -1, 0, -1,),
-		(-1, -1, -1, 0,),
-		(0, -1, 0, -1,),
-		(-1, 0, -1, 0,),
-		(-1, 0, -1, 0,),
-		(0, 0, -1, 0,))
+# Punish all steps which will make you fall and hurt yourself
+imfalling = ((0, 0, -1, 0,), 
+			 (-1, 0, -1, 0,),
+			 (0, 0, -1, 0,),
+			 (0, -1, 0, -1,),
+			 (-1, -1, -1, 0,),
+			 (-1, -1, 0, -1,),
+			 (0, -1, 0, -1,),
+			 (-1, -1, 0, -1,),
+			 (-1, -1, 0, -1,),
+			 (0, -1, 0, -1,),
+			 (-1, -1, 0, -1,),
+			 (-1, -1, -1, 0,),
+			 (0, -1, 0, -1,),
+			 (-1, 0, -1, 0,),
+			 (-1, 0, -1, 0,),
+			 (0, 0, -1, 0,))
 
-rev = imfalling + goodbad
+rev = [[imfalling[row][i]+goodbad[row][i] for i in range(len(imfalling[row]))] for row in range(len(imfalling))]
 
 trans = ((1, 3, 4, 12),
 		 (0, 2, 5, 13),
