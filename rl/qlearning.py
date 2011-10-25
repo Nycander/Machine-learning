@@ -30,3 +30,21 @@ for t in range(T):
 	Q[state][action] += learningRate*(reward + discountFactor*maxFutureValue - Q(state, action))
 	# * Replace s with s'
 	state = newState
+
+def egreedy(e, f, args):
+	if random() < e
+		return args[random.randint(0, len[args]-1)]
+	else
+		return argmax f, args
+
+
+# Utility function argmax
+def argmax(f, args):
+	mi = None
+	m = -1e10
+	for i in args:
+		v = f(i)
+		if v > m:
+			m = v
+			mi = i
+	return mi
